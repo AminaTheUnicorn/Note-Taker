@@ -2,6 +2,8 @@
 // DEPENDENCIES
 // Series of npm packages that we will use to give our server useful functionality
 // ==============================================================================
+const apiRoutes = require("./routes/apiRoutes");
+const htmlRoutes = require("./routes/htmlRoutes");
 
 var express = require("express");
 
@@ -24,9 +26,9 @@ app.use(express.json());
 app.use(express.static("public"));
 // ================================================================================
 // ROUTER
+app.use("/api", apiRoutes);
+app.use("/", htmlRoutes);
 
-// require("./routes/apiRoutes")(app);
-// require("./routes/htmlRoutes")(app);
 
 
 app.listen(PORT, function () {

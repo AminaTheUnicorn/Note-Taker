@@ -3,36 +3,37 @@
 
 // ===============================================================================
 
-let noteData = require("../data/noteData");
+let noteData = require("../db/db.json");
+let app = require("express").Router();
 
 
 // ===============================================================================
 // ROUTING
 // ===============================================================================
 
-module.exports = function (app) {
 
-  // ---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
 
-  app.get("/api/notes", function (req, res) {
-    res.json(noteData);
-  });
+app.get("/notes", function (req, res) {
+  res.json(noteData);
+});
 
+
+
+// ---------------------------------------------------------------------------
+
+app.post("/notes", function (req, res) {
   
-  
-  // ---------------------------------------------------------------------------
-
-  app.post("/api/notes", function (req, res) {
-
-  });
+});
 
 
 
-  app.delete("/api/notes/:id", function (req, res) {
-    // Empty out the arrays of data
+app.delete("/notes/:id", function (req, res) {
+  // Empty out the arrays of data
     noteData;
-  
-
+    
+    
     res.json({ ok: true });
   });
-};
+
+          module.exports = app;
