@@ -25,11 +25,11 @@ app.use(express.static("public"));
 // ================================================================================
 // ROUTER
 
-app.get("*", function (req, res) {
-  res.send("index.html");
-});
+// require("./routes/apiRoutes")(app);
+// require("./routes/htmlRoutes")(app);
 
-app.get("/notes", function (req, res) {
-    res.send("notes.html");
+
+app.listen(PORT, function () {
+    console.log("App listening on PORT: " + PORT);
   });
   
