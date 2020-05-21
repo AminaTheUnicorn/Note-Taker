@@ -3,7 +3,7 @@
 
 // ===============================================================================
 
-let noteData = require("../db/db.json");
+let noteData = require("../db/store");
 let app = require("express").Router();
 
 
@@ -14,7 +14,7 @@ let app = require("express").Router();
 
 // ---------------------------------------------------------------------------
 
-app.get("/notes", function (req, res) {
+app.get("/api/notes", function (req, res) {
   res.json(noteData);
 });
 
@@ -23,7 +23,8 @@ app.get("/notes", function (req, res) {
 // ---------------------------------------------------------------------------
 
 app.post("/notes", function (req, res) {
-  
+  noteData.push(req.body);
+  res.json(true);
 });
 
 
