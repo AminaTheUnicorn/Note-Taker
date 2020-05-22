@@ -2,10 +2,9 @@
 // DEPENDENCIES
 // Series of npm packages that we will use to give our server useful functionality
 // ==============================================================================
-const apiRoutes = require("./routes/apiRoutes");
-const htmlRoutes = require("./routes/htmlRoutes");
 
 var express = require("express");
+const path = require("path");
 
 // ==============================================================================
 // EXPRESS CONFIGURATION
@@ -23,13 +22,18 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 //static for Heroku
-app.use(express.static("public"));
 // ================================================================================
 // ROUTER
-app.use("/api", apiRoutes);
-app.use("/", htmlRoutes);
+// app.use("/api", apiRoutes);
+// app.use("/", htmlRoutes);
 
+// const apiRoutes = require("./routes/apiRoutes");
+// const htmlRoutes = require("./routes/htmlRoutes");
 
+require("./routes/apiRoutes")(app);
+require("./routes/htmlRoutes")(app);
+
+app.use(express.static("public"));
 
 app.listen(PORT, function () {
     console.log("App listening on PORT: " + PORT);
