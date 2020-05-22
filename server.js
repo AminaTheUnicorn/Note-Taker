@@ -24,16 +24,13 @@ app.use(express.json());
 //static for Heroku
 // ================================================================================
 // ROUTER
-// app.use("/api", apiRoutes);
-// app.use("/", htmlRoutes);
 
-// const apiRoutes = require("./routes/apiRoutes");
-// const htmlRoutes = require("./routes/htmlRoutes");
+
+app.use(express.static("public"));
+
 
 require("./routes/apiRoutes")(app);
 require("./routes/htmlRoutes")(app);
-
-app.use(express.static("public"));
 
 app.listen(PORT, function () {
     console.log("App listening on PORT: " + PORT);
