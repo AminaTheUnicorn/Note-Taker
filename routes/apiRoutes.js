@@ -1,77 +1,73 @@
-
-// Required Modules
 const fs = require("fs");
-const notesData = require("../db/db.json");
+const notesInput = require("../db/db.json");
 
 module.exports = function(app){
 
-
-    //========== FUNCTIONS ==========
-    function writeToDB(notes){
-        // Converts new JSON Array back to string
+    function notesToDB(notes){
+       
         notes = JSON.stringify(notes);
         console.log (notes);
         // Writes String back to db.json
         fs.writeFileSync("./db/db.json", notes, function(err){
             if (err) {
-                return console.log(err);
+                return console.log(error);
             }
         });
     }
 
-    //========== API ROUTES ==========
+    //=== ROUTES ==========
 
-    // GET Method to return all notes
+    // GET Method 
     app.get("/api/notes", function(req, res){
-        res.json(notesData);
+        res.json(notesInput);
     });
 
-    // POST Method to add notes
+    // POST Method 
     app.post("/api/notes", function(req, res){
 
-        // Set unique id to entry
-        if (notesData.length == 0){
+        // Set unique id 
+        if (notesInput.length == 0){
             req.body.id = "0";
         } else{
-            req.body.id = JSON.stringify(JSON.parse(notesData[notesData.length - 1].id) + 1);
+            req.body.id = JSON.stringify(JSON.parse(notesInput[notesInput.length - 1].id) + 1);
         }
         
-        console.log("req.body.id: " + req.body.id);
+        console.log("Unique ID " + req.body.id);
 
-        // Pushes Body to JSON Array
-        notesData.push(req.body);
+        // Push to JSON Array
+        notesInput.push(req.body);
 
         // Write notes data to database
-        writeToDB(notesData);
-        console.log(notesData);
+        notesToDB(notesInput);
+        console.log(notesInput);
 
-        // returns new note in JSON format.
+        // returns new note 
         res.json(req.body);
     });
 
-    // DELETE Method to delete note with specified ID
+    // DELETE Method 
     app.delete("/api/notes/:id", function(req, res){
         
-        // Obtains id and converts to a string
+        
         let id = req.params.id.toString();
         console.log(id);
 
-        // Goes through notesArray searching for matching ID
-        for (i=0; i < notesData.length; i++){
+        // Match ID
+        for (i=0; i < notesInput.length; i++){
            
-            if (notesData[i].id == id){
-                console.log("match!");
+            if (notesInput[i].id == id){
+                console.log("It matched!");
                 // responds with deleted note
-                res.send(notesData[i]);
+                res.send(notesInput[i]);
 
-                // Removes the deleted note
-                notesData.splice(i,1);
+                // Removes deleted note
+                notesInput.splice(i,1);
                 break;
             }
         }
 
         // Write notes data to database
-        writeToDB(notesData);
+        notesToDB(notesInput);
 
     });
 };
